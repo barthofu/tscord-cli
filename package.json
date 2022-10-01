@@ -1,0 +1,38 @@
+{
+  "name": "tscord-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node -r ts-node/register src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barthofu/tscord-cli.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/barthofu/tscord-cli/issues"
+  },
+  "homepage": "https://github.com/barthofu/tscord-cli#readme",
+  "dependencies": {
+    "@octokit/request": "^6.2.1",
+    "axios": "^0.27.2",
+    "chalk": "^5.0.1",
+    "clear": "^0.1.0",
+    "commander": "^9.4.1",
+    "figlet": "^1.5.2",
+    "octokit": "^2.0.7",
+    "tar": "^6.1.11"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.23",
+    "@types/tar": "^6.1.3",
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.0",
+    "typescript": "^4.8.4"
+  }
+}
