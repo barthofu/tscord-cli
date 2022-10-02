@@ -1,6 +1,6 @@
 {
   "name": "tscord-cli",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "A CLI for TSCord",
   "main": "lib/index.js",
   "bin": {
