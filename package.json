@@ -16,7 +16,7 @@
     "build": "npm run build:clean && npm run type:check && npm run build:compile && npm run build:post",
     "build:clean": "rimraf lib",
     "build:compile": "swc ./src -d ./lib",
-    "build:post": "ncp ./src/plop/generators/templates ./lib/plop/generators/templates",
+    "build:post": "ncp ./src/plop/cli/generators/templates ./lib/plop/cli/generators/templates",
     "type:check": "tsc --pretty --skipLibCheck --noEmit",
     "dev": "swc src -w -d lib",
     "start": "node lib/index.js",
@@ -41,6 +41,7 @@
   "dependencies": {
     "@octokit/request": "^6.2.1",
     "axios": "^0.27.2",
+    "boxen": "^5.1.2",
     "chalk": "^4.1.2",
     "commander": "^9.4.1",
     "inquirer": "^8.0.1",
