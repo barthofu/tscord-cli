@@ -20,7 +20,8 @@
     "dev": "npm run build:clean && npm run build:compile && npm run start",
     "dev:exec": "node lib/index.js",
     "start": "tscord",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "test": "echo \"No test specified\" && exit 0"
   },
   "repository": {
     "type": "git",
