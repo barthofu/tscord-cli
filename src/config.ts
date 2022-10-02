@@ -1,7 +1,10 @@
+// @ts-ignore
+import packageJson from '../package.json'
+
 export const info = {
-    name: 'tscord-cli',
-    version: '1.0.0',
-    description: 'A simple CLI for tscord.',
+    name: packageJson.name,
+    version: packageJson.version,
+    description: packageJson.description,
 }
 
 export const officialMonorepo = {
