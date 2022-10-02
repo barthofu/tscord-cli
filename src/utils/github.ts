@@ -1,6 +1,6 @@
-import { request } from '@octokit/request'
+import { request } from "@octokit/request"
 
-import { config } from '@config'
+import { config } from "@config"
 
 const githubDirectoryCode = '040000'
 
@@ -20,13 +20,13 @@ export const getPluginsFromMonorepo = async ({ owner, repo, branch} = config.off
 export const getPluginFromMonorepo = async (
     pluginName: string,
     { owner, repo, branch} = config.officialMonorepo
-): Promise<any | null> => {
+): Promise<PluginConfig | null> => {
 
     return request('GET https://raw.githubusercontent.com/{owner}/{repo}/main/{pluginName}/plugin.json', {
         owner,
         repo,
         pluginName,
     })
-        .then((response: any) => response.data)
+        .then((response: any) => JSON.parse(response.data))
         .catch((error: any) => null)
 }

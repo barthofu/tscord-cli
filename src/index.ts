@@ -1,11 +1,12 @@
-import { program } from 'commander'
+import { program } from "commander"
 
-import * as commands from './commands'
+import packageJson from "../package.json"
+import * as commands from "./commands"
 
 program
-    .name('tscord-cli')
-    .description('A CLI for TSCord')
-    .version('0.0.1')
+    .name(packageJson.name)
+    .description(packageJson.description)
+    .version(packageJson.version)
 
 for (const command of Object.values(commands)) {
 	program.addCommand(command)

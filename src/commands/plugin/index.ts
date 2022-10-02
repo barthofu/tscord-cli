@@ -1,10 +1,10 @@
-import { createCommand } from 'commander'
+import { createCommand } from "commander"
 
-import install from './install'
-import uninstall from './uninstall'
-import update from './update'
-import search from './search'
-import info from './info'
+import install from "./install"
+import uninstall from "./uninstall"
+import update from "./update"
+import search from "./search"
+import info from "./info"
 
 export const plugin = createCommand()
     .name('plugin')

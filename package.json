@@ -1,7 +1,7 @@
 {
   "name": "tscord-cli",
   "version": "1.0.0",
-  "description": "",
+  "description": "A CLI for TSCord",
   "main": "index.js",
   "scripts": {
     "start": "node -r ts-node/register src/index.ts"

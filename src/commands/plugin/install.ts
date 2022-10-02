@@ -1,6 +1,6 @@
 import { getPluginFromMonorepo, isUrl } from "@utils"
 import { createCommand } from "commander"
-import { downloadPluginFromMonorepo } from "src/utils/download"
+import { downloadPluginFromMonorepo } from "@utils"
 
 export default createCommand()
 
