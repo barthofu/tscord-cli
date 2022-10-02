@@ -1,0 +1,22 @@
+{
+    "jsc": {
+		"parser": {
+			"syntax": "typescript",
+			"tsx": false,
+			"dynamicImport": true
+		},
+		"target": "es2021",
+		"baseUrl": "./",
+		"paths": {
+            "@utils": ["./src/utils"],
+            "@config": ["./src/config.ts"]
+		},
+		"transform": {
+			"decoratorMetadata": true
+		}
+    },
+	"exclude": ["node_modules"],
+    "module": {
+        "type": "commonjs"
+    }
+}

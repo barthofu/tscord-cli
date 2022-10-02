@@ -1,12 +1,12 @@
 import { program } from "commander"
 
-import packageJson from "../package.json"
+import { info } from "@config"
 import * as commands from "./commands"
 
 program
-    .name(packageJson.name)
-    .description(packageJson.description)
-    .version(packageJson.version)
+    .name(info.name)
+    .description(info.description)
+    .version(info.version)
 
 for (const command of Object.values(commands)) {
 	program.addCommand(command)

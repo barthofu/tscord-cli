@@ -6,7 +6,7 @@ import { promisify } from 'util'
 import tar from 'tar'
 import axios from 'axios'
 
-import { config } from '@config'
+import { officialMonorepo } from '@config'
 
 const baseUrl = 'https://codeload.github.com/'
 
@@ -37,7 +37,7 @@ export const downloadTar = async (
 export const downloadPluginFromMonorepo = async (
 	pluginName: string,
 	path: string = pathUtil.resolve() + '/src/plugins',
-	options = config.officialMonorepo
+	options = officialMonorepo
 ): Promise<boolean> => {
 
 	try {

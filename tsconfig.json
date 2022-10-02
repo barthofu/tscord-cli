@@ -5,7 +5,7 @@
         "module": "commonjs",
 
         "outDir": "./lib",
-        "rootDir": ".",
+        "rootDir": "./src",
         
         "strict": true,
         "declaration": true,
@@ -22,7 +22,7 @@
     },
 
     "include": ["src", "**/*.ts"],
-    "exclude": ["build", "node_modules", "tests"],
+    "exclude": ["lib", "node_modules"],
     "paths": ["node_modules/*", "src/types/*"],
 
     "ts-node": {
