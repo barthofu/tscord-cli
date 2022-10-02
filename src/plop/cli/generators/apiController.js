@@ -16,13 +16,13 @@ module.exports = (plop) => {
         actions: [
             {
                 type: 'add',
-                path: `${path.resolve()}/src/api/controllers/{{pascalCase name}}.ts`,
+                path: `${path.resolve()}/src/api/controllers/{{camelCase name}}.ts`,
                 templateFile: 'templates/apiController.ts.hbs',
             },
             {
                 type: 'append',
                 path: `${path.resolve()}/src/api/controllers/index.ts`,
-                template: 'export * from \'./{{pascalCase name}}\'',
+                template: 'export * from \'./{{camelCase name}}\'',
             }
         ]
     })

@@ -16,13 +16,13 @@ module.exports = (plop) => {
         actions: [
             {
                 type: 'add',
-                path: `${path.resolve()}/src/api/middlewares/{{pascalCase name}}.ts`,
+                path: `${path.resolve()}/src/api/middlewares/{{camelCase name}}.ts`,
                 templateFile: 'templates/apiMiddleware.ts.hbs',
             },
             {
                 type: 'append',
                 path: `${path.resolve()}/src/api/middlewares/index.ts`,
-                template: 'export * from \'./{{pascalCase name}}\'',
+                template: 'export * from \'./{{camelCase name}}\'',
             }
         ]
     })

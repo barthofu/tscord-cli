@@ -16,13 +16,13 @@ module.exports = (plop) => {
         actions: [
             {
                 type: 'add',
-                path: `${path.resolve()}/src/utils/functions/{{pascalCase name}}.ts`,
+                path: `${path.resolve()}/src/utils/functions/{{camelCase name}}.ts`,
                 templateFile: 'templates/function.ts.hbs',
             },
             {
                 type: 'append',
                 path: `${path.resolve()}/src/utils/functions/index.ts`,
-                template: 'export * from \'./{{pascalCase name}}\'',
+                template: 'export * from \'./{{camelCase name}}\'',
             }
         ]
     })
