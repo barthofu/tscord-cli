@@ -12,11 +12,7 @@ export default createCommand()
         
         const plugin = await getPluginFromMonorepo(query)
 
-        if (plugin) {
-            console.log(plugin)
-        } else {
-            console.error('Plugin not found.')
-        }
-
+        if (plugin) console.log(plugin)
+        else console.error('Plugin not found.')
     }
 )

@@ -17,9 +17,8 @@
     "build:clean": "rimraf lib",
     "build:compile": "swc src -d lib",
     "type:check": "tsc --pretty --skipLibCheck --noEmit",
-    "dev": "npm run build:clean && npm run build:compile && npm run start",
-    "dev:exec": "node lib/index.js",
-    "start": "tscord",
+    "dev": "swc src -w -d lib",
+    "start": "node lib/index.js",
     "prepublish": "npm run build",
     "test": "echo \"No test specified\" && exit 0",
     "release": "np --no-2fa"
@@ -41,10 +40,11 @@
   "dependencies": {
     "@octokit/request": "^6.2.1",
     "axios": "^0.27.2",
-    "chalk": "^5.0.1",
+    "chalk": "^4.1.2",
     "commander": "^9.4.1",
     "inquirer": "^8.0.1",
     "node-plop": "~0.26.0",
+    "oneline": "^1.0.3",
     "plop": "^2.7.0",
     "tar": "^6.1.11"
   },
