@@ -43,7 +43,6 @@ export const downloadDirectoryFromGithubRepo = async (
 		return true
 
 	} catch (err) {
-		console.error(err)
 		return false
 	}
 	

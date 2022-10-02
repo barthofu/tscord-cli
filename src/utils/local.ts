@@ -32,3 +32,17 @@ export const uninstallPlugin = async (pluginName: string): Promise<boolean> => {
 export const getPathOfPlugin = (pluginName: string): string => {
     return resolve() + '/src/plugins/' + pluginName
 }
+
+export const isInTSCordProject = async (): Promise<boolean> => {
+
+    try {
+        
+        const tscordConfig = await fs.readFile(resolve() + '/package.json', 'utf-8')
+        const json = JSON.parse(tscordConfig)
+
+        return json?.tscordTemplate === true
+
+    } catch (err) {
+        return false
+    }
+}

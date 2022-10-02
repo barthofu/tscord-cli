@@ -3,7 +3,7 @@ import nodePlop, { NodePlopAPI } from "node-plop"
 import { resolve } from "path"
 import inquirer from "inquirer"
 import { existsSync } from "fs"
-import { downloadPlopFromGithub, logger } from "@utils"
+import { downloadPlopFromGithub, isInTSCordProject, logger } from "@utils"
 
 export const generate = createCommand()
     .name('generate')
@@ -17,6 +17,13 @@ export const generate = createCommand()
 
     .action(async (type: string | undefined, options) => {
 
+        const inTSCordProject = await isInTSCordProject()
+        if (!inTSCordProject) {
+            logger.newLine()
+            logger.failure('You are not in a TSCord project')
+            return
+        }
+
         if (options.extract) return extractPlopToLocal()
 
         const plop = await getPlopInstance()
@@ -24,11 +31,7 @@ export const generate = createCommand()
         if (!type) type = await getTypeFromUser(plop)
 
         const generator = plop.getGenerator(type)
-
-        if (!generator) {
-            console.log(`Generator "${type}" not found!`)
-            return
-        }
+        if (!generator) return console.log(`Generator "${type}" not found!`)
 
         const inputs = await generator.runPrompts()
         const results = await generator.runActions(inputs)
@@ -60,8 +63,6 @@ const getPlopInstance = async (): Promise<NodePlopAPI> => {
 
     const localPlop = existsSync(resolve() + '/cli/plopfile.js')
 
-    console.log(localPlop)
-
     if (localPlop) return nodePlop(resolve() + '/cli/plopfile.js')
     else return nodePlop(`${__dirname}/../plop/cli/plopfile.js`)
 }
@@ -72,6 +73,9 @@ const extractPlopToLocal = async () => {
 
     if (localPlop) logger.failure('Template CLI is already extracted to your project')
     else {
+        
+        logger.newLine()
+
         const success = await downloadPlopFromGithub()
 
         if (success) logger.success('Template CLI extracted to your project')
