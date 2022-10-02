@@ -11,6 +11,7 @@ export default createCommand()
     .argument('<query>', 'query you want to search')
     
     .option('-s, --short', 'speed up search command by not showing extra information on plugins')
+    .option('-l, --limit <number>', 'limit the number of results', '10')
 
     .action(async (query: string, options) => {
 
@@ -25,7 +26,10 @@ export default createCommand()
         if (results.length > 0) logger.log(chalk.underline(`Results for query '${chalk.italic.bold(query)}':\n`))
         else return logger.failure('No results found.')
 
-        for (const pluginName of results) {
+        for (const pluginName of results.slice(0, Number(options.limit))) {
+
+            const localPlugin = await getLocalPlugin(pluginName)
+            const baseMessage = `◦${localPlugin ? chalk.green(' [installed]') : ''} ${chalk.bold.magenta(pluginName)}`
 
             if (!options.short) {
 
@@ -33,21 +37,18 @@ export default createCommand()
                 
                 if (remotePlugin) {
 
-                    const localPlugin = await getLocalPlugin(pluginName)
-
                     const message = oneline`
-                        ◦${localPlugin ? chalk.green(' [installed]') : ''}
-                        ${chalk.bold.magenta(pluginName)}
+                        ${baseMessage}
                         (${remotePlugin.name} v${remotePlugin.version})
                         - ${chalk.gray.italic(remotePlugin.description)}
                     `
 
                     logger.log(message)
                 }
-                else logger.log(pluginName)
+                else logger.log(baseMessage)
 
             } else {
-                logger.log(pluginName)
+                logger.log(baseMessage)
             }
         }
 
