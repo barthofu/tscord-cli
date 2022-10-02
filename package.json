@@ -1,22 +1,36 @@
 {
   "name": "tscord-cli",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "A CLI for TSCord",
   "main": "lib/index.js",
+  "bin": {
+    "tscord": "./lib/index.js" 
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "npm run build:clean && npm run type:check && npm run build:compile",
     "build:clean": "rimraf lib",
     "build:compile": "swc src -d lib",
     "type:check": "tsc --pretty --skipLibCheck --noEmit",
-    "dev": "npm run build:clean && npm run build:compile && npm run dev:exec",
-    "dev:exec": "node lib/index.js"
+    "dev": "npm run build:clean && npm run build:compile && npm run start",
+    "dev:exec": "node lib/index.js",
+    "start": "tscord",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/barthofu/tscord-cli.git"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Bartholomé Gili",
+    "email": "dev.bartho@gmail.com"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/barthofu/tscord-cli/issues"
