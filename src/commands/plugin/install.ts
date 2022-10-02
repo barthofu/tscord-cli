@@ -1,5 +1,6 @@
 import { getPluginFromMonorepo, isUrl } from "@utils"
 import { createCommand } from "commander"
+import { downloadPluginFromMonorepo } from "src/utils/download"
 
 export default createCommand()
 
@@ -10,21 +11,28 @@ export default createCommand()
 
     .action(async (query: string) => {
          
-        // 1. determine if its a link or a plugin name
+        // determine if its a link or a plugin name
         if (!isUrl(query)) {
-            
-            // 2. if its a plugin name
-            
+                        
             const plugin = await getPluginFromMonorepo(query)
 
             if (plugin) {
 
-                // 3. download the plugin from the official repo
+                // download the plugin from the official repo
+                const result = await downloadPluginFromMonorepo(query)
+
+                if (result) {
+                    console.log(`Successfully installed ${query}`)
+                } else {
+                    console.error(`Failed to install ${query}`)
+                }
 
             } else {
                 console.error(`Plugin ${query} not found.`)
             }
 
+        } else {
+            console.error('Not implemented yet.')
         }
     }
 )

@@ -1,6 +1,6 @@
 import { createWriteStream, promises as fs } from 'fs'
 import { tmpdir } from 'os'
-import { join } from 'path'
+import pathUtil from 'path'
 import { Readable, Stream } from 'stream'
 import { promisify } from 'util'
 import tar from 'tar'
@@ -11,13 +11,13 @@ import { config } from '@config'
 const baseUrl = 'https://codeload.github.com/'
 
 export const downloadTar = async (
-	owner: string = config.officialMonorepo.owner,
-    repo: string = config.officialMonorepo.repo,
-    branch: string = config.officialMonorepo.branch
+	owner: string,
+	repo: string,
+	branch: string,
 ) => {
 
 	const pipeline = promisify(Stream.pipeline)
-	const tempFile = join(tmpdir(), `tscord-plugin.temp-${Date.now()}`)
+	const tempFile = pathUtil.join(tmpdir(), `tscord-plugin.temp-${Date.now()}`)
 
 	const request = await axios({
 		responseType: 'stream',
@@ -29,23 +29,34 @@ export const downloadTar = async (
 }
 
 /**
- * Download and extract a plugin
+ * Download and extract a plugin from a github monorepo
  *
- * @param root project path
- * @param name project name
+ * @param pluginName project name
+ * @param options optional options
  */
-export const downloadAndExtractPlugin = async (root: string, name: string): Promise<boolean> => {
+export const downloadPluginFromMonorepo = async (
+	pluginName: string,
+	path: string = pathUtil.resolve() + '/src/plugins',
+	options = config.officialMonorepo
+): Promise<boolean> => {
 
-	const tempFile = await downloadTar()
+	try {
+		
+		const tempFile = await downloadTar(options.owner, options.repo, options.branch)
+	
+		await tar.x({
+			cwd: path,
+			file: tempFile,
+			filter: (p) => p.includes(pluginName),
+			strip: 1,
+		})
+	
+		await fs.unlink(tempFile)
+	
+		return true
 
-	await tar.x({
-		cwd: root,
-		file: tempFile,
-		filter: (p) => p.includes(`templates-main/${name}`),
-		strip: 2,
-	})
+	} catch (err) {
 
-	await fs.unlink(tempFile)
-
-	return true
+		return false
+	}
 }

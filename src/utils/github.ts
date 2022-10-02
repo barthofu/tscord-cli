@@ -4,11 +4,7 @@ import { config } from '@config'
 
 const githubDirectoryCode = '040000'
 
-export const getPluginsFromMonorepo = async (
-    owner: string = config.officialMonorepo.owner,
-    repo: string = config.officialMonorepo.repo,
-    branch: string = config.officialMonorepo.branch
-): Promise<string[]> => {
+export const getPluginsFromMonorepo = async ({ owner, repo, branch} = config.officialMonorepo): Promise<string[]> => {
 
     const response = await request('GET /repos/{owner}/{repo}/git/trees/{branch}', {
         owner,
@@ -23,9 +19,7 @@ export const getPluginsFromMonorepo = async (
 
 export const getPluginFromMonorepo = async (
     pluginName: string,
-    owner: string = config.officialMonorepo.owner,
-    repo: string = config.officialMonorepo.repo,
-    branch: string = config.officialMonorepo.branch
+    { owner, repo, branch} = config.officialMonorepo
 ): Promise<any | null> => {
 
     return request('GET https://raw.githubusercontent.com/{owner}/{repo}/main/{pluginName}/plugin.json', {
