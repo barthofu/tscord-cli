@@ -13,9 +13,10 @@
     "access": "public"
   },
   "scripts": {
-    "build": "npm run build:clean && npm run type:check && npm run build:compile",
+    "build": "npm run build:clean && npm run type:check && npm run build:compile && npm run build:post",
     "build:clean": "rimraf lib",
-    "build:compile": "swc src -d lib",
+    "build:compile": "swc ./src -d ./lib",
+    "build:post": "ncp ./src/plop/generators/templates ./lib/plop/generators/templates",
     "type:check": "tsc --pretty --skipLibCheck --noEmit",
     "dev": "swc src -w -d lib",
     "start": "node lib/index.js",
@@ -52,6 +53,7 @@
   "devDependencies": {
     "@types/node": "^18.7.23",
     "@types/tar": "^6.1.3",
+    "ncp": "^2.0.0",
     "np": "^7.6.2",
     "rimraf": "^3.0.2",
     "swc": "^1.0.11",

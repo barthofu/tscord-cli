@@ -30,6 +30,4 @@ export const logger = {
             this.log('')
         }
     }
-
-
 }

@@ -1,19 +1,25 @@
 import { Argument, createCommand } from "commander"
 import nodePlop, { NodePlopAPI } from "node-plop"
 import { resolve } from "path"
-import inquirer from 'inquirer'
+import inquirer from "inquirer"
+import { existsSync } from "fs"
+import { downloadPlopFromGithub, logger } from "@utils"
 
 export const generate = createCommand()
     .name('generate')
     .description('generate different types of files based on sanitized templates')
 
     .addArgument(
-        new Argument('[type]', 'type of file you want to generate.')
+        new Argument('[type]', 'type of file you want to generate')
     )
 
-    .action(async (type: string | undefined) => {
+    .option('--extract', 'extract the template cli to your project locally so you can edit/add generators and templates')
 
-        const plop = await nodePlop(resolve() + '/cli/plopfile.js')
+    .action(async (type: string | undefined, options) => {
+
+        if (options.extract) return extractPlopToLocal()
+
+        const plop = await getPlopInstance()
 
         if (!type) type = await getTypeFromUser(plop)
 
@@ -48,4 +54,27 @@ const getTypeFromUser = async (plop: NodePlopAPI): Promise<string> => {
     }])
 
     return result.type
+}
+
+const getPlopInstance = async (): Promise<NodePlopAPI> => {
+
+    const localPlop = existsSync(resolve() + '/cli/plopfile.js')
+
+    console.log(localPlop)
+
+    if (localPlop) return nodePlop(resolve() + '/cli/plopfile.js')
+    else return nodePlop(`${__dirname}/../plop/cli/plopfile.js`)
+}
+
+const extractPlopToLocal = async () => {
+
+    const localPlop = existsSync(resolve() + '/cli/plopfile.js')
+
+    if (localPlop) logger.failure('Template CLI is already extracted to your project')
+    else {
+        const success = await downloadPlopFromGithub()
+
+        if (success) logger.success('Template CLI extracted to your project')
+        else logger.failure('Something went wrong while extracting the template CLI to your project')
+    }
 }

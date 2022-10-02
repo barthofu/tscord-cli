@@ -10,22 +10,43 @@ import { officialMonorepo } from '@config'
 
 const baseUrl = 'https://codeload.github.com/'
 
-export const downloadTar = async (
-	owner: string,
-	repo: string,
-	branch: string,
+export const downloadDirectoryFromGithubRepo = async (
+	destinationPath: string,
+	subDirectory: string,
+	source = officialMonorepo,
+	strip = 1
 ) => {
 
-	const pipeline = promisify(Stream.pipeline)
-	const tempFile = pathUtil.join(tmpdir(), `tscord-plugin.temp-${Date.now()}`)
+	try {
 
-	const request = await axios({
-		responseType: 'stream',
-		url: `${baseUrl}/${owner}/${repo}/tar.gz/${branch}`,
-	})
+		// download the whole repository
+		const pipeline = promisify(Stream.pipeline)
+		const tempFile = pathUtil.join(tmpdir(), `temp-${Date.now()}`)
 
-	await pipeline(Readable.from(request.data), createWriteStream(tempFile))
-	return tempFile
+		const request = await axios({
+			responseType: 'stream',
+			url: `${baseUrl}/${source.owner}/${source.repo}/tar.gz/${source.branch}`,
+		})
+
+		await pipeline(Readable.from(request.data), createWriteStream(tempFile))
+
+		// extract the subdirectory
+		await tar.x({
+			cwd: destinationPath,
+			file: tempFile,
+			filter: (p) => p.includes(subDirectory),
+			strip
+		})
+
+		await fs.unlink(tempFile)
+
+		return true
+
+	} catch (err) {
+		console.error(err)
+		return false
+	}
+	
 }
 
 /**
@@ -40,23 +61,14 @@ export const downloadPluginFromMonorepo = async (
 	options = officialMonorepo
 ): Promise<boolean> => {
 
-	try {
-		
-		const tempFile = await downloadTar(options.owner, options.repo, options.branch)
-	
-		await tar.x({
-			cwd: path,
-			file: tempFile,
-			filter: (p) => p.includes(pluginName),
-			strip: 1,
-		})
-	
-		await fs.unlink(tempFile)
-	
-		return true
+	return downloadDirectoryFromGithubRepo(path, pluginName, options)
+}
 
-	} catch (err) {
+export const downloadPlopFromGithub = async (destinationPath: string = pathUtil.resolve()) => {
 
-		return false
-	}
+	return downloadDirectoryFromGithubRepo(destinationPath, 'src/plop/cli/', {
+		owner: 'barthofu',
+		repo: 'tscord-cli',
+		branch: 'main'
+	}, 3)
 }
