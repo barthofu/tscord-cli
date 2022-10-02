@@ -8,7 +8,7 @@
 - [ ] beautify
 
 ### Plugin
-- [ ] --details on `search` command
+- [x] --short on `search` command
 
 ### Generate
 - [ ] remove the plop CLI from the TSCord template and add it to this CLI

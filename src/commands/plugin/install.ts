@@ -1,6 +1,7 @@
-import { getPluginFromMonorepo, isUrl } from "@utils"
+import { getLocalPlugin, getPluginFromMonorepo, isUrl, logger } from "@utils"
 import { createCommand } from "commander"
 import { downloadPluginFromMonorepo } from "@utils"
+import chalk from "chalk"
 
 export default createCommand()
 
@@ -10,29 +11,31 @@ export default createCommand()
     .argument('<name | url>', 'Plugin name or url you want to install.')
 
     .action(async (query: string) => {
+
+        logger.newLine()
+        logger.spinner.start(`Installing plugin ${chalk.bold(query)}...`)
          
         // determine if its a link or a plugin name
         if (!isUrl(query)) {
                         
-            const plugin = await getPluginFromMonorepo(query)
+            const localPlugin = await getLocalPlugin(query)
+            if (localPlugin) return logger.failure(`Plugin ${chalk.bold(query)} already installed.`)
 
-            if (plugin) {
+            const remotePlugin = await getPluginFromMonorepo(query)
+
+            if (remotePlugin) {
 
                 // download the plugin from the official repo
                 const result = await downloadPluginFromMonorepo(query)
 
-                if (result) {
-                    console.log(`Successfully installed ${query}`)
-                } else {
-                    console.error(`Failed to install ${query}`)
-                }
+                if (result) logger.success(`Successfully installed ${chalk.bold(query)}`)
+                else logger.failure(`Failed to install ${chalk.bold(query)}`)
 
-            } else {
-                console.error(`Plugin ${query} not found.`)
-            }
+            } else logger.failure(`Plugin ${chalk.bold(query)} not found.`)
 
         } else {
-            console.error('Not implemented yet.')
+            logger.log('Not implemented yet.')
         }
+
     }
 )

@@ -1,4 +1,5 @@
-import { getPluginFromMonorepo, getLocalPlugin, uninstallPlugin, downloadPluginFromMonorepo } from "@utils"
+import { getPluginFromMonorepo, getLocalPlugin, uninstallPlugin, downloadPluginFromMonorepo, logger } from "@utils"
+import chalk from "chalk"
 import { createCommand } from "commander"
 
 export default createCommand()
@@ -10,23 +11,24 @@ export default createCommand()
 
     .action(async (pluginName: string) => {
 
+        logger.newLine()
+        logger.spinner.start(`Updating plugin ${chalk.bold(pluginName)}...`)
+
         const remotePlugin = await getPluginFromMonorepo(pluginName)
         const localPlugin = await getLocalPlugin(pluginName)
         
         // guards
-        if (!remotePlugin) return console.log(`Plugin ${pluginName} does not exist in the remote.`)
-        else if (!localPlugin) return console.log(`Plugin ${pluginName} does not exist locally.`)
-        else if (remotePlugin.version === localPlugin.version) return console.log(`Plugin ${pluginName} is already up to date.`)
+        if (!remotePlugin) return logger.failure(`Plugin ${chalk.bold(pluginName)} does not exist in the remote.`)
+        else if (!localPlugin) return logger.failure(`Plugin ${chalk.bold(pluginName)} does not exist locally.`)
+        else if (remotePlugin.version === localPlugin.version) return logger.failure(`Plugin ${chalk.bold(pluginName)} is already up to date.`)
 
         // update the plugin
-        console.log(`Updating plugin ${pluginName}...`)
-
         const successfullyUninstalledPlugin = await uninstallPlugin(pluginName)
-        if (!successfullyUninstalledPlugin) return console.log(`Failed to uninstall plugin ${pluginName}.`)
+        if (!successfullyUninstalledPlugin) return logger.failure(`Failed to uninstall plugin ${chalk.bold(pluginName)}.`)
         
         const successfullyInstalledPlugin = await downloadPluginFromMonorepo(pluginName)
-        if (!successfullyInstalledPlugin) return console.log(`Failed to install plugin ${pluginName}.`)
+        if (!successfullyInstalledPlugin) return logger.failure(`Failed to install plugin ${chalk.bold(pluginName)}.`)
 
-        console.log(`Successfully updated plugin ${pluginName}.`)
+        logger.success(`Successfully updated plugin ${chalk.bold(pluginName)}.`)
     }
 )

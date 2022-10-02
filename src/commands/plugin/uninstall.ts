@@ -1,4 +1,5 @@
-import { getLocalPlugin, uninstallPlugin } from "@utils"
+import { getLocalPlugin, logger, uninstallPlugin } from "@utils"
+import chalk from "chalk"
 import { createCommand } from "commander"
 import { rm } from "fs"
 import { resolve } from "path"
@@ -13,17 +14,20 @@ export default createCommand()
 
     .action(async (pluginName: string) => {
 
+        logger.newLine()
+        logger.spinner.start(`Uninstalling plugin ${chalk.bold(pluginName)}...`)
+
         const localPlugin = await getLocalPlugin(pluginName)
 
         if (localPlugin) {
 
             const success = await uninstallPlugin(pluginName)
 
-            if (success) console.log(`Successfully uninstalled ${pluginName}`)
-            else console.log(`Failed to uninstall ${pluginName}`)
+            if (success) logger.success(`Successfully uninstalled ${chalk.bold(pluginName)}`)
+            else logger.failure(`Failed to uninstall ${chalk.bold(pluginName)}`)
 
         } else {
-            console.error(`Plugin ${pluginName} does not exist locally.`)
+            logger.failure(`Plugin ${chalk.bold(pluginName)} does not exist locally.`)
         }
         
     }
