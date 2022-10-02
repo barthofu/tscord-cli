@@ -1,0 +1,7 @@
+import { NextFunction, Request, Response } from "express"
+
+export async function {{pascalCase name}}(req: Request, res: Response, next: NextFunction) {
+
+    console.log('Middleware {{pascalCase name}} invoked !')
+    next()
+}

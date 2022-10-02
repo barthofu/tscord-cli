@@ -4,6 +4,7 @@ import { resolve } from "path"
 import inquirer from "inquirer"
 import { existsSync } from "fs"
 import { downloadPlopFromGithub, isInTSCordProject, logger } from "@utils"
+import chalk from "chalk"
 
 export const generate = createCommand()
     .name('generate')
@@ -16,13 +17,6 @@ export const generate = createCommand()
     .option('--extract', 'extract the template cli to your project locally so you can edit/add generators and templates')
 
     .action(async (type: string | undefined, options) => {
-
-        const inTSCordProject = await isInTSCordProject()
-        if (!inTSCordProject) {
-            logger.newLine()
-            logger.failure('You are not in a TSCord project')
-            return
-        }
 
         if (options.extract) return extractPlopToLocal()
 
@@ -53,7 +47,13 @@ const getTypeFromUser = async (plop: NodePlopAPI): Promise<string> => {
         type: 'list',
         name: 'type',
         message: 'What do you want to generate?',
-        choices: generators.map(generator => generator.name)
+        choices: generators
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map(({ name, description }) => ({
+                name: `${chalk.greenBright(name)} - ${chalk.gray.italic(description ?? plop.getGenerator(name)?.description)}`,
+                value: name
+            })),
+        loop: false
     }])
 
     return result.type

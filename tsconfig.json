@@ -18,7 +18,8 @@
         "baseUrl": ".",
         "paths": {
             "@utils": ["src/utils"],
-            "@config": ["src/config"]
+            "@config": ["src/config"],
+            "@src": ["src"]
         }
     },
 

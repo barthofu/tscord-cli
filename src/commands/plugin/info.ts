@@ -8,7 +8,7 @@ export default createCommand()
     .name('info')
     .description('info on a plugin')
 
-    .argument('<name | url>', 'Plugin name or url you want to install.')
+    .argument('<name | url>', 'Get all info on a plugin.')
 
     .action(async (query: string) => {
 

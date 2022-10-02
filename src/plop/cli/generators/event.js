@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = (plop) => {
 
     plop.setGenerator('event', {
@@ -18,7 +20,7 @@ module.exports = (plop) => {
         ],
         actions: [{
             type: 'add',
-            path: '../src/events/{{#if customEvent}}custom/{{/if}}{{camelCase name}}.ts',
+            path: `${path.resolve()}/src/events/{{#if customEvent}}custom/{{/if}}{{camelCase name}}.ts`,
             templateFile: 'templates/event.ts.hbs',
         }]
     })

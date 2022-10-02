@@ -2,6 +2,7 @@ import { getLocalPlugin, getPluginFromMonorepo, getPluginsFromMonorepo, logger }
 import chalk from "chalk"
 import { createCommand } from "commander"
 import oneline from "oneline"
+import { verbose } from "../../../src"
 
 export default createCommand()
 
@@ -14,6 +15,8 @@ export default createCommand()
     .option('-l, --limit <number>', 'limit the number of results', '10')
 
     .action(async (query: string, options) => {
+
+        if (verbose()) console.log('bite')
 
         logger.newLine()
         

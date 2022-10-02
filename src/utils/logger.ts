@@ -1,5 +1,6 @@
 import chalk from "chalk"
 import ora from "ora"
+import { verbose } from "../index"
 
 export const logger = {
 
@@ -29,5 +30,9 @@ export const logger = {
         for (let i = 0; i < numberOfLines; i++) {
             this.log('')
         }
+    },
+
+    verbose(message: string) {
+        if (verbose()) this.log(message)
     }
 }

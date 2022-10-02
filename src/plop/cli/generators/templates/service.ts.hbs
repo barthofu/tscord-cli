@@ -1,0 +1,13 @@
+import { singleton } from 'tsyringe'
+
+import { Logger } from '@services'
+
+@singleton()
+export class {{pascalCase name}} {
+
+    constructor(
+        private logger: Logger
+    ) {
+        this.logger.console('Service {{pascalCase name}} invoked !', 'info')
+    }
+}

@@ -1,0 +1,24 @@
+import { Get, JsonController, UseBefore, Req } from "routing-controllers"
+import { Request } from 'express'
+import { injectable } from "tsyringe"
+
+import { BaseController } from "@utils/classes"
+
+@JsonController('/{{camelCase name}}')
+@injectable()
+export class {{ pascalCase name }}Controller extends BaseController {
+
+    constructor() {
+        super()
+    }
+
+    @Get('/')
+    async default(@Req() req: Request) {
+
+        const body = {
+            status: 'ok'
+        }
+
+        return bod
+    }
+}

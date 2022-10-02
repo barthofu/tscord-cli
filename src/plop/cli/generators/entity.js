@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = (plop) => {
 
     plop.setGenerator('entity', {
@@ -12,12 +14,12 @@ module.exports = (plop) => {
         actions: [
             {
                 type: 'add',
-                path: '../src/entities/{{pascalCase name}}.ts',
+                path: `${path.resolve()}/src/entities/{{pascalCase name}}.ts`,
                 templateFile: 'templates/entity.ts.hbs',
             },
             {
                 type: 'append',
-                path: '../src/entities/index.ts',
+                path: `${path.resolve()}/src/entities/index.ts`,
                 template: 'export * from \'./{{pascalCase name}}\'',
             }
         ]

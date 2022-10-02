@@ -1,0 +1,11 @@
+import { injectable } from "tsyringe"
+
+@injectable()
+export abstract class {{pascalCase name}} {
+
+    constructor(
+        private logger: Logger
+    ) {
+        this.logger.console('Class {{pascalCase name}} invoked !', 'info')
+    }
+}

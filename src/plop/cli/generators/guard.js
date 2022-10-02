@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = (plop) => {
 
     plop.setGenerator('guard', {
@@ -12,12 +14,12 @@ module.exports = (plop) => {
         actions: [
             {
                 type: 'add',
-                path: '../src/guards/{{camelCase name}}.ts',
+                path: `${path.resolve()}/src/guards/{{camelCase name}}.ts`,
                 templateFile: 'templates/guard.ts.hbs',
             },
             {
                 type: 'append',
-                path: '../src/guards/index.ts',
+                path: `${path.resolve()}/src/guards/index.ts`,
                 template: 'export * from \'./{{camelCase name}}\'',
             }
         ]
