@@ -1,4 +1,5 @@
-import { getPluginFromMonorepo, getLocalPlugin, uninstallPlugin, downloadPluginFromMonorepo, logger } from "@utils"
+import { checkLocation } from "@middlewares"
+import { downloadPluginFromMonorepo, getLocalPlugin, getPluginFromMonorepo, logger, uninstallPlugin } from "@utils"
 import chalk from "chalk"
 import { createCommand } from "commander"
 
@@ -10,6 +11,8 @@ export default createCommand()
     .argument('<name>', 'plugin name you want to update')
 
     .action(async (pluginName: string) => {
+
+        if (!await checkLocation()) return
 
         logger.newLine()
         logger.spinner.start(`Updating plugin ${chalk.bold(pluginName)}...`)
@@ -30,5 +33,4 @@ export default createCommand()
         if (!successfullyInstalledPlugin) return logger.failure(`Failed to install plugin ${chalk.bold(pluginName)}.`)
 
         logger.success(`Successfully updated plugin ${chalk.bold(pluginName)}.`)
-    }
-)
+    })

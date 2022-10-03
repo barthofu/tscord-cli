@@ -22,7 +22,6 @@ async function run() {
     
     if (
         await checkVersion() &&
-        await checkLocation(program) &&
         await checkVerbose(program)
     ) {
 

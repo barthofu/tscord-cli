@@ -5,8 +5,10 @@ import uninstall from "./uninstall"
 import update from "./update"
 import search from "./search"
 import info from "./info"
+import list from "./list"
 
 export const plugin = createCommand()
+
     .name('plugin')
     .description('manage plugins')
 
@@ -15,3 +17,4 @@ export const plugin = createCommand()
     .addCommand(update)
     .addCommand(search)
     .addCommand(info)
+    .addCommand(list)

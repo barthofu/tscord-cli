@@ -53,5 +53,4 @@ export default createCommand()
         }
 
         logger.newLine()
-    }
-)
+    })

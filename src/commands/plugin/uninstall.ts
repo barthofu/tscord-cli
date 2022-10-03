@@ -1,9 +1,7 @@
+import { checkLocation } from "@middlewares"
 import { getLocalPlugin, logger, uninstallPlugin } from "@utils"
 import chalk from "chalk"
 import { createCommand } from "commander"
-import { rm } from "fs"
-import { resolve } from "path"
-import { promisify } from "util"
 
 export default createCommand()
 
@@ -13,6 +11,8 @@ export default createCommand()
     .argument('<name>', 'plugin name you want to uninstall')
 
     .action(async (pluginName: string) => {
+
+        if (!await checkLocation()) return
 
         logger.newLine()
         logger.spinner.start(`Uninstalling plugin ${chalk.bold(pluginName)}...`)
@@ -30,5 +30,4 @@ export default createCommand()
             logger.failure(`Plugin ${chalk.bold(pluginName)} does not exist locally.`)
         }
         
-    }
-)
+    })

@@ -1,3 +1,4 @@
+import { checkLocation } from "@middlewares"
 import { downloadPlopFromGithub, logger } from "@utils"
 import chalk from "chalk"
 import { Argument, createCommand } from "commander"
@@ -7,6 +8,7 @@ import nodePlop, { NodePlopAPI } from "node-plop"
 import { resolve } from "path"
 
 export const generate = createCommand()
+
     .name('generate')
     .description('generate different types of files based on sanitized templates')
 
@@ -17,6 +19,8 @@ export const generate = createCommand()
     .option('--extract', 'extract the template cli to your project locally so you can edit/add generators and templates')
 
     .action(async (type: string | undefined, options) => {
+
+        if (!await checkLocation()) return
 
         if (options.extract) return extractPlopToLocal()
 

@@ -6,9 +6,9 @@ import { createCommand } from "commander"
 export default createCommand()
 
     .name('info')
-    .description('info on a plugin')
+    .description('get all info on a plugin')
 
-    .argument('<name | url>', 'get all info on a plugin')
+    .argument('<name>', 'name of the plugin you want to get info on')
 
     .action(async (query: string) => {
 
@@ -38,5 +38,4 @@ export default createCommand()
         else logger.failure('Plugin not found.')
         
         logger.newLine()
-    }
-)
+    })

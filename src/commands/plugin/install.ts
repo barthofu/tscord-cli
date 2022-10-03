@@ -1,3 +1,4 @@
+import { checkLocation } from "@middlewares"
 import { downloadPluginFromMonorepo, getLocalPlugin, getPluginFromMonorepo, isUrl, logger } from "@utils"
 import chalk from "chalk"
 import { createCommand } from "commander"
@@ -7,9 +8,11 @@ export default createCommand()
     .name('install')
     .description('install a plugin')
 
-    .argument('<name | url>', 'plugin name or url you want to install')
+    .argument('<name>', 'plugin name or url you want to install')
 
     .action(async (query: string) => {
+
+        if (!await checkLocation()) return
 
         logger.newLine()
         logger.spinner.start(`Installing plugin ${chalk.bold(query)}...`)
@@ -33,8 +36,7 @@ export default createCommand()
             } else logger.failure(`Plugin ${chalk.bold(query)} not found.`)
 
         } else {
-            logger.log('Not implemented yet.')
+            logger.failure('Not implemented yet.')
         }
 
-    }
-)
+    })
