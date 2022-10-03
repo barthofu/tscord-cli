@@ -1,5 +1,6 @@
 import chalk from "chalk"
 import ora from "ora"
+import logSymbols from "log-symbols"
 
 export const logger = {
 
@@ -19,11 +20,11 @@ export const logger = {
     },
 
     success(message: string, addNewLine = true) {
-        this.log('✅ ' + message + (addNewLine ? '\n' : ''))
+        this.log(`${logSymbols.success} ` + message + (addNewLine ? '\n' : ''))
     },
 
     failure(message: string, addNewLine = true) {
-        this.log('❌ ' + message + (addNewLine ? '\n' : ''))
+        this.log(`${logSymbols.error} ` + message + (addNewLine ? '\n' : ''))
     },
 
     newLine(numberOfLines: number = 1) {

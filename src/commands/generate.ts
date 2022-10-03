@@ -61,15 +61,15 @@ const getTypeFromUser = async (plop: NodePlopAPI): Promise<string> => {
 
 const getPlopInstance = async (): Promise<NodePlopAPI> => {
 
-    const localPlop = existsSync(resolve('/cli/plopfile.js'))
+    const localPlop = existsSync(resolve() + '/cli/plopfile.js')
 
-    if (localPlop) return nodePlop(resolve('/cli/plopfile.js'))
+    if (localPlop) return nodePlop(resolve() + '/cli/plopfile.js')
     else return nodePlop(`${__dirname}/../plop/cli/plopfile.js`)
 }
 
 const extractPlopToLocal = async () => {
 
-    const localPlop = existsSync(resolve('/cli/plopfile.js'))
+    const localPlop = existsSync(resolve() + '/cli/plopfile.js')
 
     if (localPlop) logger.failure('Template CLI is already extracted to your project')
     else {

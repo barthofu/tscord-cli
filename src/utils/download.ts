@@ -67,7 +67,7 @@ export const downloadRepoFromGithub = async (
  */
 export const downloadPluginFromMonorepo = async (
 	pluginName: string,
-	path: string = resolve('/src/plugins'),
+	path: string = resolve() + '/src/plugins',
 	options = repositories.plugins
 ): Promise<boolean> => {
 

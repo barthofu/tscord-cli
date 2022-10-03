@@ -20,9 +20,8 @@
     "type:check": "tsc --pretty --skipLibCheck --noEmit",
     "dev": "swc src -w -d lib",
     "start": "node lib/index.js",
-    "prepublish": "npm run build",
     "test": "echo \"No test specified\" && exit 0",
-    "release": "np --no-2fa"
+    "release": "npm run build && np --no-2fa"
   },
   "repository": {
     "type": "git",
@@ -45,11 +44,13 @@
     "chalk": "^4.1.2",
     "commander": "^9.4.1",
     "inquirer": "^8.0.1",
+    "log-symbols": "^3.0.0",
     "node-plop": "~0.26.0",
     "oneline": "^1.0.3",
     "ora": "^5.1.2",
     "plop": "^2.7.0",
     "simple-git": "^3.14.1",
+    "spawnise": "^1.0.0",
     "tar": "^6.1.11"
   },
   "devDependencies": {
