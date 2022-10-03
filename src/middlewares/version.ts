@@ -23,7 +23,7 @@ export const checkVersion = async () => {
                 logger.newLine()
                 logger.log(
                     boxen(
-                        'Run ' + chalk.bold.bgHex('#404040')(` npm i -g ${info.name}@${latestVersion} `) + ' to update to the latest version',
+                        'Run ' + chalk.bold.bgBlack(` npm i -g ${info.name}@${latestVersion} `) + ' to update to the latest version',
                         {
                             title: chalk.hex('#fc7f03')(`A new version of ${chalk.bold('TSCord CLI')} is available: ${chalk.greenBright(latestVersion)}`),
                             titleAlignment: 'center',

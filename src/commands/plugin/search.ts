@@ -29,7 +29,7 @@ export default createCommand()
         for (const pluginName of results.slice(0, Number(options.limit))) {
 
             const localPlugin = await getLocalPlugin(pluginName)
-            const baseMessage = `◦${localPlugin ? chalk.green(' [installed]') : ''} ${chalk.bold.magenta(pluginName)}`
+            const baseMessage = `◦${localPlugin ? chalk.green(' [installed]') : ''} ${chalk.bold.greenBright(pluginName)}`
 
             if (!options.short) {
 

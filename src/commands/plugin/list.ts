@@ -28,7 +28,7 @@ export default createCommand()
 
             const message = 
                 `◦${localPlugin ? chalk.green(' [installed]') : ''} ` +
-                `${options.link ? terminalLink(chalk.bold.magenta(pluginName), pluginUrl) : chalk.bold.magenta(pluginName)}`
+                `${options.link ? terminalLink(chalk.bold.greenBright(pluginName), pluginUrl) : chalk.bold.greenBright(pluginName)}`
 
             logger.log(message)
 

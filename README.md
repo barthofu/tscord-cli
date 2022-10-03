@@ -110,7 +110,7 @@ The `plugin info` command show you all the information about a plugin.
 
 ```bash
 tscord plugin info <name>
-``` 
+```
 
 ## Todo
 - [ ] verbose option
