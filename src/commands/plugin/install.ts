@@ -1,14 +1,13 @@
-import { getLocalPlugin, getPluginFromMonorepo, isUrl, logger } from "@utils"
-import { createCommand } from "commander"
-import { downloadPluginFromMonorepo } from "@utils"
+import { downloadPluginFromMonorepo, getLocalPlugin, getPluginFromMonorepo, isUrl, logger } from "@utils"
 import chalk from "chalk"
+import { createCommand } from "commander"
 
 export default createCommand()
 
     .name('install')
     .description('install a plugin')
 
-    .argument('<name | url>', 'Plugin name or url you want to install.')
+    .argument('<name | url>', 'plugin name or url you want to install')
 
     .action(async (query: string) => {
 

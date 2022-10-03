@@ -1,4 +1,4 @@
-import { info, selfRepo } from '@config'
+import { info, repositories } from '@config'
 import { request } from '@octokit/request'
 import { logger } from '@utils'
 import boxen from 'boxen'
@@ -12,7 +12,7 @@ export const checkVersion = async () => {
     const currentVersion = info.version
 
     // get latest version from github
-    return request('GET https://raw.githubusercontent.com/{owner}/{repo}/main/package.json', selfRepo)
+    return request('GET https://raw.githubusercontent.com/{owner}/{repo}/main/package.json', repositories.cli)
         .then((response: any) => {
 
             const json = JSON.parse(response.data)

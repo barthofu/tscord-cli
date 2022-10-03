@@ -7,14 +7,23 @@ export const info = {
     description: packageJson.description,
 }
 
-export const officialMonorepo = {
-    owner: 'barthofu',
-    repo: 'tscord-plugins',
-    branch: 'main',
-}
+export const repositories = {
 
-export const selfRepo = {
-    owner: 'barthofu',
-    repo: 'tscord-cli',
-    branch: 'main',
+    plugins: {
+        owner: 'barthofu',
+        repo: 'tscord-plugins',
+        branch: 'main',
+    },
+
+    cli: {
+        owner: 'barthofu',
+        repo: 'tscord-cli',
+        branch: 'main',
+    },
+
+    template: {
+        owner: 'barthofu',
+        repo: 'tscord',
+        branch: 'main',
+    }
 }

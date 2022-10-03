@@ -1,10 +1,10 @@
+import { downloadPlopFromGithub, logger } from "@utils"
+import chalk from "chalk"
 import { Argument, createCommand } from "commander"
+import { existsSync } from "fs"
+import inquirer from "inquirer"
 import nodePlop, { NodePlopAPI } from "node-plop"
 import { resolve } from "path"
-import inquirer from "inquirer"
-import { existsSync } from "fs"
-import { downloadPlopFromGithub, isInTSCordProject, logger } from "@utils"
-import chalk from "chalk"
 
 export const generate = createCommand()
     .name('generate')
@@ -61,15 +61,15 @@ const getTypeFromUser = async (plop: NodePlopAPI): Promise<string> => {
 
 const getPlopInstance = async (): Promise<NodePlopAPI> => {
 
-    const localPlop = existsSync(resolve() + '/cli/plopfile.js')
+    const localPlop = existsSync(resolve('/cli/plopfile.js'))
 
-    if (localPlop) return nodePlop(resolve() + '/cli/plopfile.js')
+    if (localPlop) return nodePlop(resolve('/cli/plopfile.js'))
     else return nodePlop(`${__dirname}/../plop/cli/plopfile.js`)
 }
 
 const extractPlopToLocal = async () => {
 
-    const localPlop = existsSync(resolve() + '/cli/plopfile.js')
+    const localPlop = existsSync(resolve('/cli/plopfile.js'))
 
     if (localPlop) logger.failure('Template CLI is already extracted to your project')
     else {

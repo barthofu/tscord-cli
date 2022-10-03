@@ -7,7 +7,7 @@ export default createCommand()
     .name('update')
     .description('update a plugin')
 
-    .argument('<name>', 'Plugin name you want to update.')
+    .argument('<name>', 'plugin name you want to update')
 
     .action(async (pluginName: string) => {
 
