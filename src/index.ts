@@ -3,11 +3,9 @@
 import { program } from "commander"
 
 import { info } from "@config"
-import { isInTSCordProject, logger } from "@utils"
+import { checkLocation, checkVersion, checkVerbose } from "@middlewares"
 
 import * as commands from "./commands"
-
-export const verbose = (): boolean => program.opts().verbose || false
 
 program
     .name(info.name)
@@ -20,17 +18,17 @@ for (const command of Object.values(commands)) {
 	program.addCommand(command)
 }
 
-async function main() {
+async function run() {
     
-    const inTSCordProject = await isInTSCordProject()
-    if (!inTSCordProject) {
-        logger.newLine()
-        logger.failure('You are not in a TSCord project')
-        return
+    if (
+        await checkVersion() &&
+        await checkLocation() &&
+        await checkVerbose(program)
+    ) {
+
+        program.parse(process.argv)
     }
-    
-    program.parse(process.argv)
 }
 
-main()
+run()
 

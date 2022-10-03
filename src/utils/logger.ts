@@ -1,9 +1,9 @@
 import chalk from "chalk"
 import ora from "ora"
-import { verbose } from "../index"
 
 export const logger = {
 
+    isVerbose: false,
     spinner: ora(),
 
     log (message: string) {
@@ -33,6 +33,6 @@ export const logger = {
     },
 
     verbose(message: string) {
-        if (verbose()) this.log(message)
+        if (this.isVerbose) this.log(message)
     }
 }

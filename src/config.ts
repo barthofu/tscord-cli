@@ -12,3 +12,9 @@ export const officialMonorepo = {
     repo: 'tscord-plugins',
     branch: 'main',
 }
+
+export const selfRepo = {
+    owner: 'barthofu',
+    repo: 'tscord-cli',
+    branch: 'main',
+}

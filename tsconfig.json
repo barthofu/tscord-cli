@@ -19,7 +19,7 @@
         "paths": {
             "@utils": ["src/utils"],
             "@config": ["src/config"],
-            "@src": ["src"]
+            "@middlewares": ["src/middlewares"]
         }
     },
 
