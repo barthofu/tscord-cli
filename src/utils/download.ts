@@ -8,19 +8,16 @@ import axios from 'axios'
 
 import { repositories } from '@config'
 
-const baseUrl = 'https://codeload.github.com/'
-
 /**
- * Downloads a github repository
+ * @param url source url to download from
  * @param destinationPath the path where the repository will be downloaded
- * @param source the source of the repository (owner, repo, branch)
  * @param subDirectory if set, the subdirectory to download
  * @param strip if set, the number of directories to strip from the path
- * @returns 
+ * @returns boolean if the download was successful
  */
-export const downloadRepoFromGithub = async (
+const downloadFromGithub = async (
+	url: string,
 	destinationPath: string,
-	source = repositories.plugins,
 	subDirectory: string | null = null,
 	strip = 1
 ) => {
@@ -33,7 +30,7 @@ export const downloadRepoFromGithub = async (
 
 		const request = await axios({
 			responseType: 'stream',
-			url: `${baseUrl}/${source.owner}/${source.repo}/tar.gz/${source.branch}`,
+			url,
 		})
 
 		await pipeline(Readable.from(request.data), createWriteStream(tempFile))
@@ -56,25 +53,93 @@ export const downloadRepoFromGithub = async (
 		console.log(err)
 		return false
 	}
+}
+
+/**
+ * Downloads a release from a github repository
+ * @param destinationRelativePath the relative path where the repository will be downloaded
+ * @param source the source of the repository (owner, repo, branch)
+ * @param releaseTag release tag to download, if none is provided it will attempt to download the latest release
+ * @returns boolean if the download was successful
+ */
+export const downloadReleaseFromGithub = async (
+	destinationRelativePath: string, 
+	source = repositories.template,
+	releaseTag?: string
+): Promise<boolean> => {
+
+	let url: string | null
+
+	if (releaseTag) {
+		url = `https://github.com/${source.owner}/${source.repo}/archive/refs/tags/${releaseTag}.tar.gz`
+	} else {
+		// get the tag of the latest release
+		try {
+
+			const res = await axios.get(
+				`https://api.github.com/repos/${source.owner}/${source.repo}/releases/latest`
+			)
 	
+			const latestReleaseInfo = res.data.tag_name
+
+			url = `https://github.com/${source.owner}/${source.repo}/archive/refs/tags/${latestReleaseInfo}.tar.gz`
+
+		} catch (err) {
+			
+			url = null
+		}
+	}
+
+	if (url) {
+
+		return downloadFromGithub(
+			url,
+			resolve() + '/' + destinationRelativePath,
+		)
+
+	} else return false
+
+
+}
+
+/**
+ * Downloads a github repository
+ * @param destinationRelativePath the relative path where the repository will be downloaded
+ * @param source the source of the repository (owner, repo, branch)
+ * @param subDirectory if set, the subdirectory to download
+ * @param strip if set, the number of directories to strip from the path
+ * @returns boolean if the download was successful
+ */
+export const downloadRepoFromGithub = async (
+	destinationRelativePath: string,
+	source = repositories.plugins,
+	subDirectory: string | null = null,
+	strip = 1
+) => {
+
+	return downloadFromGithub(
+		`https://codeload.github.com//${source.owner}/${source.repo}/tar.gz/${source.branch}`,
+		resolve() + '/' + destinationRelativePath,
+		subDirectory, 
+		strip
+	)
 }
 
 /**
  * Download and extract a plugin from a github monorepo
- *
  * @param pluginName project name
  * @param options optional options
  */
 export const downloadPluginFromMonorepo = async (
 	pluginName: string,
-	path: string = resolve() + '/src/plugins',
+	path: string = 'src/plugins',
 	options = repositories.plugins
 ): Promise<boolean> => {
 
 	return downloadRepoFromGithub(path, options, pluginName)
 }
 
-export const downloadPlopFromGithub = async (destinationPath: string = resolve()) => {
+export const downloadPlopFromGithub = async (destinationPath: string = '') => {
 
 	return downloadRepoFromGithub(
 		destinationPath, 

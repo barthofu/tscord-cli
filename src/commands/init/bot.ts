@@ -1,9 +1,9 @@
 import { repositories } from "@config"
-import { downloadRepoFromGithub, logger } from "@utils"
+import { downloadReleaseFromGithub, downloadRepoFromGithub, logger } from "@utils"
 import chalk from "chalk"
 import { createCommand } from "commander"
 import { existsSync } from "fs"
-import { mkdir } from "fs/promises"
+import { mkdir, rmdir } from "fs/promises"
 import { resolve } from "path"
 import simpleGit from "simple-git"
 import { spawn } from 'spawnise'
@@ -32,10 +32,18 @@ export default createCommand()
         await mkdir(name)
 
         // download the template
-        await downloadRepoFromGithub(
+        const success = await downloadReleaseFromGithub(
             name,
             repositories.template
         )
+        
+        if (!success) {
+
+            await rmdir(name)
+            logger.failure('Failed to download template')
+            return
+        }
+
 
         // install dependencies
         if (options.deps) {
