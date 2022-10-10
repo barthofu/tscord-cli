@@ -2,27 +2,24 @@ import { request } from "@octokit/request"
 
 import { repositories } from "@config"
 
-const githubDirectoryCode = '040000'
+export const getPluginsFromMonorepo = async ({ owner, repo } = repositories.plugins): Promise<string[]> => {
 
-export const getPluginsFromMonorepo = async ({ owner, repo, branch} = repositories.plugins): Promise<string[]> => {
-
-    const response = await request('GET /repos/{owner}/{repo}/git/trees/{branch}', {
+    const response = await request('GET /repos/{owner}/{repo}/contents/plugins', {
         owner,
         repo,
-        branch,
     })
 
-    return response.data.tree
-        .filter((item: any) => item.mode === githubDirectoryCode)
-        .map((item: any) => item.path)
+    return response.data
+        .filter((item: any) => item.type === 'dir')
+        .map((item: any) => item.name)
 }
 
 export const getPluginFromMonorepo = async (
     pluginName: string,
-    { owner, repo, branch} = repositories.plugins
+    { owner, repo } = repositories.plugins
 ): Promise<PluginConfig | null> => {
 
-    return request('GET https://raw.githubusercontent.com/{owner}/{repo}/main/{pluginName}/plugin.json', {
+    return request('GET https://raw.githubusercontent.com/{owner}/{repo}/main/plugins/{pluginName}/plugin.json', {
         owner,
         repo,
         pluginName,

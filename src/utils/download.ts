@@ -99,7 +99,6 @@ export const downloadReleaseFromGithub = async (
 
 	} else return false
 
-
 }
 
 /**
@@ -112,13 +111,13 @@ export const downloadReleaseFromGithub = async (
  */
 export const downloadRepoFromGithub = async (
 	destinationRelativePath: string,
-	source = repositories.plugins,
+	{ owner, repo, branch } = repositories.plugins,
 	subDirectory: string | null = null,
 	strip = 1
 ) => {
 
 	return downloadFromGithub(
-		`https://codeload.github.com//${source.owner}/${source.repo}/tar.gz/${source.branch}`,
+		`https://codeload.github.com//${owner}/${repo}/tar.gz/${branch}`,
 		resolve() + '/' + destinationRelativePath,
 		subDirectory, 
 		strip
@@ -136,7 +135,7 @@ export const downloadPluginFromMonorepo = async (
 	options = repositories.plugins
 ): Promise<boolean> => {
 
-	return downloadRepoFromGithub(path, options, pluginName)
+	return downloadRepoFromGithub(path, options, '/plugins/' + pluginName, 2)
 }
 
 export const downloadPlopFromGithub = async (destinationPath: string = '') => {

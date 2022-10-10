@@ -2,7 +2,6 @@ import { repositories } from "@config"
 import { getLocalPlugin, getPluginsFromMonorepo, logger } from "@utils"
 import chalk from "chalk"
 import { createCommand } from "commander"
-import terminalLink from 'terminal-link'
 
 export default createCommand()
 
@@ -24,11 +23,12 @@ export default createCommand()
             const localPlugin = await getLocalPlugin(pluginName)
             if (options.installed && !localPlugin) continue
 
-            const pluginUrl = `https://github.com/${repositories.plugins.owner}/${repositories.plugins.repo}/tree/${repositories.plugins.branch}/${pluginName}/`
+            const pluginUrl = `https://github.com/${repositories.plugins.owner}/${repositories.plugins.repo}/tree/${repositories.plugins.branch}/plugins/${pluginName}/`
 
             const message = 
                 `◦${localPlugin ? chalk.green(' [installed]') : ''} ` +
-                `${options.link ? terminalLink(chalk.bold.greenBright(pluginName), pluginUrl) : chalk.bold.greenBright(pluginName)}`
+                chalk.bold.greenBright(pluginName) +
+                `${options.link ? ` (${pluginUrl})` : '' }`
 
             logger.log(message)
 

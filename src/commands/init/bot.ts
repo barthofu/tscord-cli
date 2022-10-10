@@ -1,5 +1,5 @@
 import { repositories } from "@config"
-import { downloadReleaseFromGithub, downloadRepoFromGithub, logger } from "@utils"
+import { downloadReleaseFromGithub, logger } from "@utils"
 import chalk from "chalk"
 import { createCommand } from "commander"
 import { existsSync } from "fs"
