@@ -1,7 +1,10 @@
-import { NextFunction, Request, Response } from "express"
+import { Context, Middleware, PlatformContext } from "@tsed/common"
 
-export async function {{pascalCase name}}(req: Request, res: Response, next: NextFunction) {
+@Middleware()
+export class {{pascalCase name}} {
 
-    console.log('Middleware {{pascalCase name}} invoked !')
-    next()
+    async use(@Context() { request }: PlatformContext) {
+
+        console.log('Middleware {{pascalCase name}} invoked !')
+    }
 }

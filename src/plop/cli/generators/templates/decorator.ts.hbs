@@ -1,4 +1,4 @@
-import { waitForDependency } from '@utils/functions'
+import { resolveDependency } from '@utils/functions'
 
 export const {{pascalCase name}} = () => {
 
@@ -10,7 +10,7 @@ export const {{pascalCase name}} = () => {
 
         import('@services').then(async ({ Logger }) => {
 
-            const logger = await waitForDependency(Logger)
+            const logger = await resolveDependency(Logger)
             
             logger.log('decorator {{pascalCase name}} invoked !', 'info')
         })

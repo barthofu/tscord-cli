@@ -1,9 +1,9 @@
-import { waitForDependency } from "@utils/functions"
+import { resolveDependency } from "@utils/functions"
 import { Logger } from "@service"
 
 export const {{pascalCase name}} = async (): Promise<void> => {
 
-    const logger = await waitForDependency(Logger)
+    const logger = await resolveDependency(Logger)
 
     logger.log('function {{pascalCase name}} invoked !', 'info') 
        
