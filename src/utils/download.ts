@@ -7,6 +7,7 @@ import tar from 'tar'
 import axios from 'axios'
 
 import { repositories } from '@config'
+import { logger } from './logger'
 
 /**
  * @param url source url to download from
@@ -50,7 +51,6 @@ const downloadFromGithub = async (
 		return true
 
 	} catch (err) {
-		console.log(err)
 		return false
 	}
 }
@@ -65,14 +65,15 @@ const downloadFromGithub = async (
 export const downloadReleaseFromGithub = async (
 	destinationRelativePath: string, 
 	source = repositories.template,
-	releaseTag?: string
+	releaseTag: string = 'latest'
 ): Promise<boolean> => {
 
 	let url: string | null
 
-	if (releaseTag) {
-		url = `https://github.com/${source.owner}/${source.repo}/archive/refs/tags/${releaseTag}.tar.gz`
+	if (releaseTag !== 'latest') {
+		url = `https://github.com/${source.owner}/${source.repo}/archive/refs/tags/v${releaseTag}.tar.gz`
 	} else {
+
 		// get the tag of the latest release
 		try {
 

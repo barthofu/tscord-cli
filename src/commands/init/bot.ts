@@ -16,11 +16,12 @@ export default createCommand()
     .description('init a discord bot based on the tscord template')
 
     .argument('<name>', 'name of the bot')
+    .argument('[version]', 'specify the version of the template to use', 'latest')
 
     .option('--no-deps', 'do not install dependencies')
     .option('--no-git', 'do not setup git')
 
-    .action(async (name: string, options) => {
+    .action(async (name: string, version: string, options) => {
 
         logger.newLine()
         logger.spinner.start('Downloading template...')
@@ -34,13 +35,14 @@ export default createCommand()
         // download the template
         const success = await downloadReleaseFromGithub(
             name,
-            repositories.template
+            repositories.template,
+            version
         )
         
         if (!success) {
 
             await rmdir(name)
-            logger.failure('Failed to download template')
+            logger.failure('Failed to download the template' + (version !== 'latest' ? `\n  Version ${chalk.bold(version)} does not exist` : ''))
             return
         }
 
@@ -50,7 +52,8 @@ export default createCommand()
 
             logger.spinner.start('Installing dependencies...')
 
-            await spawn('npm install', {
+            await spawn('npm', ['install'], {
+                env: process.env,
                 cwd: resolve(name),
                 stdio: 'ignore'
             })
