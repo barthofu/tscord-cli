@@ -17,7 +17,7 @@ module.exports = (plop) => {
             {
                 type: 'add',
                 path: `${path.resolve()}/src/utils/errors/{{pascalCase name}}.ts`,
-                templateFile: 'templates/customError.ts.hbs',
+                templateFile: 'templates/utilsError.hbs',
             },
             {
                 type: 'append',

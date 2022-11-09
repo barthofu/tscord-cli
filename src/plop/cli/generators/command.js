@@ -25,7 +25,7 @@ module.exports = (plop) => {
         actions: [{
             type: 'add',
             path: `${path.resolve()}/src/commands/{{pascalCase category}}/{{camelCase name}}.ts`,
-            templateFile: 'templates/command.ts.hbs',
+            templateFile: 'templates/command.hbs',
         }]
     })
 }

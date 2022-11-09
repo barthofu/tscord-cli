@@ -1,5 +1,5 @@
-import { logger } from "@utils";
-import { Command } from "commander";
+import { logger } from "@utils"
+import { Command } from "commander"
 
 export const checkVerbose = (program: Command) => {
 

@@ -17,7 +17,7 @@ module.exports = (plop) => {
             {
                 type: 'add',
                 path: `${path.resolve()}/src/api/controllers/{{camelCase name}}.ts`,
-                templateFile: 'templates/apiController.ts.hbs',
+                templateFile: 'templates/apiController.hbs',
             },
             {
                 type: 'append',

@@ -15,7 +15,7 @@ module.exports = (plop) => {
             {
                 type: 'add',
                 path: `${path.resolve()}/src/entities/{{pascalCase name}}.ts`,
-                templateFile: 'templates/entity.ts.hbs',
+                templateFile: 'templates/entity.hbs',
             },
             {
                 type: 'append',

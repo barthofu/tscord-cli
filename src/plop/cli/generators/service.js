@@ -17,7 +17,7 @@ module.exports = (plop) => {
             {
                 type: 'add',
                 path: `${path.resolve()}/src/services/{{pascalCase name}}.ts`,
-                templateFile: 'templates/service.ts.hbs',
+                templateFile: 'templates/service.hbs',
             },
             {
                 type: 'append',

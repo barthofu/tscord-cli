@@ -1,7 +1,6 @@
-import { Controller, UseBefore, Get } from "@tsed/common"
-import { Request } from "express"
+import { Controller, UseBefore, Get } from '@tsed/common'
 
-import { BaseController } from "@utils/classes"
+import { BaseController } from '@utils/classes'
 
 @Controller('/{{camelCase name}}')
 export class {{ pascalCase name }}Controller extends BaseController {
@@ -11,7 +10,7 @@ export class {{ pascalCase name }}Controller extends BaseController {
     }
 
     @Get('/test')
-    async default( {
+    async default() {
 
         const body = {
             status: 'ok'

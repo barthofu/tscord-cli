@@ -15,7 +15,7 @@ module.exports = (plop) => {
             {
                 type: 'add',
                 path: `${path.resolve()}/src/i18n/{{ locale }}/index.ts`,
-                templateFile: 'templates/i18n.ts.hbs',
+                templateFile: 'templates/i18n.hbs',
             }
         ]
     })

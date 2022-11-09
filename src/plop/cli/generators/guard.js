@@ -15,7 +15,7 @@ module.exports = (plop) => {
             {
                 type: 'add',
                 path: `${path.resolve()}/src/guards/{{camelCase name}}.ts`,
-                templateFile: 'templates/guard.ts.hbs',
+                templateFile: 'templates/guard.hbs',
             },
             {
                 type: 'append',

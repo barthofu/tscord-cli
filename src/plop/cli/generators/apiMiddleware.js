@@ -17,7 +17,7 @@ module.exports = (plop) => {
             {
                 type: 'add',
                 path: `${path.resolve()}/src/api/middlewares/{{camelCase name}}.ts`,
-                templateFile: 'templates/apiMiddleware.ts.hbs',
+                templateFile: 'templates/apiMiddleware.hbs',
             },
             {
                 type: 'append',

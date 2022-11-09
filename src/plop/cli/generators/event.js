@@ -21,7 +21,7 @@ module.exports = (plop) => {
         actions: [{
             type: 'add',
             path: `${path.resolve()}/src/events/{{#if customEvent}}custom/{{/if}}{{camelCase name}}.ts`,
-            templateFile: 'templates/event.ts.hbs',
+            templateFile: 'templates/event.hbs',
         }]
     })
 }

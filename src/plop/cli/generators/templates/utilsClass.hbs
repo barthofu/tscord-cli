@@ -1,7 +1,9 @@
-import { injectable } from "tsyringe"
+import { injectable } from 'tsyringe'
+
+import { Logger } from '@services'
 
 @injectable()
-export abstract class {{pascalCase name}} {
+export class {{pascalCase name}} {
 
     constructor(
         private logger: Logger

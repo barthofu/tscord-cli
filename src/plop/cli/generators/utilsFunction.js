@@ -17,7 +17,7 @@ module.exports = (plop) => {
             {
                 type: 'add',
                 path: `${path.resolve()}/src/utils/functions/{{camelCase name}}.ts`,
-                templateFile: 'templates/function.ts.hbs',
+                templateFile: 'templates/utilsFunction.hbs',
             },
             {
                 type: 'append',
