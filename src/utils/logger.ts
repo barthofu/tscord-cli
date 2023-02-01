@@ -23,8 +23,9 @@ export const logger = {
         this.log(`${logSymbols.success} ` + message + (addNewLine ? '\n' : ''))
     },
 
-    failure(message: string, addNewLine = true) {
+    failure(message: string, addNewLine = true, exit = true) {
         this.log(`${logSymbols.error} ` + message + (addNewLine ? '\n' : ''))
+        if (exit) process.exit(1)
     },
 
     newLine(numberOfLines: number = 1) {
