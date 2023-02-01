@@ -1,5 +1,5 @@
 import { checkLocation } from "@middlewares"
-import { downloadPluginFromMonorepo, getLocalPlugin, getPluginFromMonorepo, isUrl, logger } from "@utils"
+import { downloadPluginFromMonorepo, getCurrentPackageManager, getLocalPlugin, getPluginFromMonorepo, isUrl, logger } from "@utils"
 import chalk from "chalk"
 import { createCommand } from "commander"
 import { resolve } from "path"
@@ -36,7 +36,9 @@ export default createCommand()
                 // download dependencies
                 logger.spinner.start('Installing plugin dependencies...')
 
-                await spawn('npm', ['install'], {
+                const packageManager = await getCurrentPackageManager()
+
+                await spawn(packageManager, ['install'], {
                     env: process.env,
                     cwd: resolve() + `/src/plugins/${name}/`,
                     stdio: 'ignore'
