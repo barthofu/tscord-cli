@@ -1,0 +1,13 @@
+import { injectable } from 'tsyringe'
+
+import { Logger } from '@services'
+
+@injectable()
+export class {{pascalCase name}} {
+
+    constructor(
+        private logger: Logger
+    ) {
+        this.logger.console('Class {{pascalCase name}} invoked !', 'info')
+    }
+}

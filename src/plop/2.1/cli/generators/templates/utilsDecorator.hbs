@@ -1,0 +1,18 @@
+import { resolveDependency } from '@utils/functions'
+
+export const {{pascalCase name}} = () => {
+
+    return function (
+		target: any,
+		propertyKey: string,
+		descriptor: PropertyDescriptor
+    ) {
+
+        import('@services').then(async ({ Logger }) => {
+
+            const logger = await resolveDependency(Logger)
+            
+            logger.log('decorator {{pascalCase name}} invoked !', 'info')
+        })
+    }
+}

@@ -1,5 +1,5 @@
 import { checkLocation } from "@middlewares"
-import { downloadPlopFromGithub, logger } from "@utils"
+import { downloadPlopFromGithub, getTscordVersion, logger } from "@utils"
 import chalk from "chalk"
 import { Argument, createCommand } from "commander"
 import { existsSync } from "fs"
@@ -25,6 +25,7 @@ export const generate = createCommand()
         if (options.extract) return extractPlopToLocal()
 
         const plop = await getPlopInstance()
+        if (!plop) return logger.failure('Your TSCord version is unknown.\nYou may need to update the CLI in order to support the latest version of TSCord.')
 
         if (!type) type = await getTypeFromUser(plop)
 
@@ -63,12 +64,19 @@ const getTypeFromUser = async (plop: NodePlopAPI): Promise<string> => {
     return result.type
 }
 
-const getPlopInstance = async (): Promise<NodePlopAPI> => {
+const getPlopInstance = async (): Promise<NodePlopAPI | null> => {
 
     const localPlop = existsSync(resolve() + '/cli/plopfile.js')
 
     if (localPlop) return nodePlop(resolve() + '/cli/plopfile.js')
-    else return nodePlop(`${__dirname}/../plop/cli/plopfile.js`)
+    else {
+        try {
+            const tscordVersion = await getTscordVersion()
+            return nodePlop(`${__dirname}/../plop/${tscordVersion}/cli/plopfile.js`)
+        } catch (err) {
+            return null
+        }
+    }
 }
 
 const extractPlopToLocal = async () => {

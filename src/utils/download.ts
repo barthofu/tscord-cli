@@ -7,7 +7,7 @@ import tar from 'tar'
 import axios from 'axios'
 
 import { repositories } from '@config'
-import { logger } from './logger'
+import { getTscordVersion } from '@utils'
 
 /**
  * @param url source url to download from
@@ -141,10 +141,12 @@ export const downloadPluginFromMonorepo = async (
 
 export const downloadPlopFromGithub = async (destinationPath: string = '') => {
 
+	const tscordVersion = await getTscordVersion()
+
 	return downloadRepoFromGithub(
 		destinationPath, 
 		repositories.cli, 
-		'src/plop/cli/', 
+		`src/plop/${tscordVersion}/cli/`, 
 		3
 	)
 }

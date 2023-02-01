@@ -3,7 +3,7 @@ import { downloadReleaseFromGithub, logger } from "@utils"
 import chalk from "chalk"
 import { createCommand } from "commander"
 import { existsSync } from "fs"
-import { mkdir, rmdir } from "fs/promises"
+import { mkdir, rm, rmdir } from "fs/promises"
 import { resolve } from "path"
 import simpleGit from "simple-git"
 import { spawn } from 'spawnise'
@@ -20,6 +20,8 @@ export default createCommand()
 
     .option('--no-deps', 'do not install dependencies')
     .option('--no-git', 'do not setup git')
+    .option('--pnpm', 'use pnpm instead of npm')
+    .option('--yarn', 'use yarn instead of npm')
 
     .action(async (name: string, version: string, options) => {
 
@@ -52,11 +54,16 @@ export default createCommand()
 
             logger.spinner.start('Installing dependencies...')
 
-            await spawn('npm', ['install'], {
+            const packageManager = options.pnpm ? 'pnpm' : options.yarn ? 'yarn' : 'npm'
+
+            if (packageManager !== 'npm') await rm(resolve(name, 'package-lock.json'))
+
+            await spawn(packageManager, ['install'], {
                 env: process.env,
                 cwd: resolve(name),
                 stdio: 'ignore'
             })
+
         }
 
         // setup git
