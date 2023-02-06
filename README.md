@@ -27,9 +27,20 @@ The easiest way to get started with TSCord is by using the `init` command. It'll
 tscord init bot <name>
 ```
 
+### Info
+
+Display info about your TSCord project.
+
+```bash
+tscord info
+```
+
 ### Generate
 
 You can generate every type of file needed in a TSCord bot application using the CLI in order to speed up your development process.
+
+> **info**
+> The CLI auto-detects your current TSCord version and adapts the generated files to this version. Just keep in mind to update the CLI if you want to generate files for a brand new version prior to when you've installed the CLI.
 
 First, run the command:
 ```bash
