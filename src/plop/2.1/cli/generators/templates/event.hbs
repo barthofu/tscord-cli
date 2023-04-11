@@ -16,10 +16,10 @@ export default class {{pascalCase name}}Event {
     // =============================
 
     {{/if}}
-    @OnCustom('{{camelCase name}}')
+    {{#if customEvent}}@OnCustom('{{camelCase name}}'){{else}}@On('{{camelCase name}}'){{/if}}
     async {{camelCase name}}Handler(
         {{#if customEvent}}arg: any,
-        {{else}}[arg]: ArgsOf<'{{camelCase name}}'>{{/if}}
+        {{else}}[arg]: ArgsOf<'{{camelCase name}}'>{{/if}},
         client: Client
     ) {
 
