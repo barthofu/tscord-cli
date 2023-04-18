@@ -6,6 +6,7 @@ import update from "./update"
 import search from "./search"
 import info from "./info"
 import list from "./list"
+import versions from "./versions"
 
 export const plugin = createCommand()
 
@@ -18,3 +19,4 @@ export const plugin = createCommand()
     .addCommand(search)
     .addCommand(info)
     .addCommand(list)
+    .addCommand(versions)
