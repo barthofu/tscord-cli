@@ -1,8 +1,9 @@
 import { repositories } from "@config"
-import { getPluginFromMonorepo, logger } from "@utils"
+import { getPackageJson, getPluginFromMonorepo, logger } from "@utils"
 import boxen from "boxen"
 import chalk from "chalk"
 import { createCommand } from "commander"
+import semver from "semver"
 
 export default createCommand()
 
@@ -14,22 +15,25 @@ export default createCommand()
     .action(async (query: string) => {
 
         logger.newLine()
+
+        const version = query.split('@')[1] || 'latest'
+        const name = query.split('@')[0]
         
-        const plugin = await getPluginFromMonorepo(query)
+        const remotePlugin = await getPluginFromMonorepo(name, version)
 
-        if (plugin) {
+        if (remotePlugin) {
 
-            const pluginUrl = `https://github.com/${repositories.plugins.owner}/${repositories.plugins.repo}/tree/${repositories.plugins.branch}/${query}/`
+            const pluginUrl = `https://github.com/${repositories.plugins.owner}/${repositories.plugins.repo}/tree/${repositories.plugins.branch}/${name}/`
 
             const message = boxen(
-                `${chalk.bold('id:')} ${chalk.italic.greenBright(query)}\n` +
-                `${chalk.bold('description:')} ${plugin.description}\n` +
-                `${chalk.bold('author:')} ${plugin.author}\n` +
-                `${chalk.bold('version:')} ${chalk.bgBlack(plugin.version)}\n` +
-                `${chalk.bold('tscord required version:')} ${chalk.bgBlack(plugin.tscordRequiredVersion)}\n` +
+                `${chalk.bold('id:')} ${chalk.italic.greenBright(name)}\n` +
+                `${chalk.bold('description:')} ${remotePlugin.description}\n` +
+                `${chalk.bold('author:')} ${remotePlugin.author}\n` +
+                `${chalk.bold('version:')} ${chalk.bgBlack(remotePlugin.version)}\n` +
+                `${chalk.bold('tscord required version:')} ${chalk.bgBlack(remotePlugin.tscordRequiredVersion)}\n` +
                 `${chalk.bold('link:')} ${chalk.gray(pluginUrl)}`,
                 {
-                    title: chalk.bold.greenBright(plugin.name),
+                    title: chalk.bold.greenBright(remotePlugin.name),
                     titleAlignment: 'center',
                     padding: 1,
                     borderStyle: 'round',
