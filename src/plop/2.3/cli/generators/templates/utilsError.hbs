@@ -1,0 +1,13 @@
+import { BaseError } from '@/utils/classes'
+
+export class {{pascalCase name}} extends BaseError {
+
+    constructor() {
+        super('Your error message')
+    }
+
+    handle() {
+        this.logger.console(this.message, 'error')
+    }
+    
+}

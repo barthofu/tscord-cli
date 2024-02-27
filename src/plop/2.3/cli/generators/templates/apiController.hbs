@@ -1,0 +1,21 @@
+import { Controller, Get } from '@tsed/common'
+
+import { BaseController } from '@/utils/classes'
+
+@Controller('/{{camelCase name}}')
+export class {{ pascalCase name }}Controller extends BaseController {
+
+	constructor() {
+		super()
+	}
+
+	@Get('/test')
+	async default() {
+		const body = {
+			status: 'ok',
+		}
+
+		return body
+	}
+
+}
