@@ -1,7 +1,7 @@
 {
   "name": "tscord",
-  "version": "2.0.0",
-  "description": "The official CLI for TSCord",
+  "version": "2.0.1",
+  "description": "A fully-featured discord bot template written in Typescript, intended to provide a framework that's easy to use, extend and modify",
   "main": "lib/index.js",
   "bin": {
     "tscord": "./lib/index.js"
