@@ -61,7 +61,7 @@ export default createCommand()
             await spawn(packageManager, ['install'], {
                 env: process.env,
                 cwd: resolve(name),
-                stdio: 'ignore'
+                stdio: ['ignore', 'ignore', 'pipe']
             })
 
         }
