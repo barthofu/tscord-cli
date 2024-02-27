@@ -58,11 +58,22 @@ export default createCommand()
 
             if (packageManager !== 'npm') await rm(resolve(name, 'package-lock.json'))
 
-            await spawn(packageManager, ['install'], {
-                env: process.env,
-                cwd: resolve(name),
-                stdio: ['ignore', 'ignore', 'pipe']
-            })
+            try {
+
+                await spawn(packageManager, ['install'], {
+                    env: process.env,
+                    cwd: resolve(name),
+                    stdio: 'ignore'
+                })
+            } catch (error) {
+
+                logger.failure(
+                    'Failed to install dependencies. It is certainly due to missing native build tools on your system.\n\n' +
+                    'For more informations, please refer to https://tscord.discbot.app/docs/bot/get-started/installation.\n' +
+                    'Otherwise, manually run the installation command with the package manager of your choice to have more details on the actual error.'
+                )
+                return
+            }
 
         }
 
