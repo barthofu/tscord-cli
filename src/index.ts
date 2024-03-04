@@ -3,7 +3,7 @@
 import { program } from "commander"
 
 import { info } from "@config"
-import { checkLocation, checkVersion, checkVerbose } from "@middlewares"
+import { checkVerbose, checkVersion, deprecation } from "@middlewares"
 
 import * as commands from "./commands"
 
@@ -21,8 +21,8 @@ for (const command of Object.values(commands)) {
 async function run() {
     
     if (
-        await checkVersion() &&
-        await checkVerbose(program)
+        deprecation() &&
+        checkVerbose(program)
     ) {
 
         program.parse(process.argv)
