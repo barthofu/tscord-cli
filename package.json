@@ -12,6 +12,27 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barthofu/tscord-cli.git"
+  },
+  "keywords": [
+    "tscord",
+    "cli",
+    "discord",
+    "bot",
+    "template",
+    "discord.js"
+  ],
+  "author": {
+    "name": "Bartholomé Gili",
+    "email": "dev.bartho@gmail.com"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/barthofu/tscord-cli/issues"
+  },
+  "homepage": "https://tscord.discbot.app/docs/cli",
   "scripts": {
     "build": "npm run build:clean && npm run type:check && npm run build:compile",
     "build:clean": "rimraf lib",
@@ -22,20 +43,6 @@
     "test": "echo \"No test specified\" && exit 0",
     "release": "npm run build && np --no-2fa"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/barthofu/tscord-cli.git"
-  },
-  "keywords": [],
-  "author": {
-    "name": "Bartholomé Gili",
-    "email": "dev.bartho@gmail.com"
-  },
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/barthofu/tscord-cli/issues"
-  },
-  "homepage": "https://github.com/barthofu/tscord-cli#readme",
   "dependencies": {
     "@octokit/request": "^6.2.1",
     "axios": "^0.27.2",

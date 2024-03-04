@@ -1,11 +1,11 @@
 # TSCord CLI
 
-The official CLI for your [TSCord](https://github.com/barthofu/tscord) application!
+The official CLI for your [TSCord](https://github.com/barthofu/tscord) project!
 
 ## Installation
 
 ```bash
-npm install -g tscord-cli
+npm install -g tscord
 ```
 
 ## Usage
