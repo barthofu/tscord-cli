@@ -1,0 +1,13 @@
+import { Service } from '@/decorators'
+import { Logger } from '@/services'
+
+@Service()
+export class {{pascalCase name}} {
+
+    constructor(
+        private logger: Logger
+    ) {
+        this.logger.console('Service {{pascalCase name}} invoked !', 'info')
+    }
+
+}

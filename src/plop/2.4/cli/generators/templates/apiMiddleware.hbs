@@ -1,0 +1,9 @@
+import { Context, Middleware, PlatformContext } from '@tsed/common'
+
+@Middleware()
+export class {{pascalCase name}} {
+
+    async use(@Context() { request }: PlatformContext) {
+        console.log('Middleware {{camelCase name}} invoked !')
+    }
+}

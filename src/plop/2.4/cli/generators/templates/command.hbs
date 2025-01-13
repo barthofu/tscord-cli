@@ -1,0 +1,25 @@
+import { Category } from '@discordx/utilities'
+import { CommandInteraction } from 'discord.js'
+import { Client } from 'discordx'
+
+import { Discord, Slash } from '@/decorators'
+import { Guard } from '@/guards'
+
+@Discord()
+@Category('{{pascalCase category}}')
+export default class TestCommand {
+
+	@Slash({
+		name: '{{camelCase name}}',
+		description: 'Here goes the command description!',
+	})
+	@Guard()
+	async {{camelCase name}}(
+		interaction: CommandInteraction,
+		client: Client,
+		{ localize }: InteractionData
+	) {
+		interaction.followUp('{{camelCase name}} command invoked!')
+	}
+
+}

@@ -1,0 +1,13 @@
+import { Injectable } from '@/decorators'
+import { Logger } from '@/services'
+
+@Injectable()
+export class {{pascalCase name}} {
+
+    constructor(
+        private logger: Logger
+    ) {
+        this.logger.console('Class {{pascalCase name}} invoked !', 'info')
+    }
+    
+}

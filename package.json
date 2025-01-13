@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/barthofu/tscord-cli/issues"
   },
-  "homepage": "https://tscord.discbot.app/docs/cli",
+  "homepage": "https://tscord.bartho.dev/docs/cli",
   "scripts": {
     "build": "npm run build:clean && npm run type:check && npm run build:compile",
     "build:clean": "rimraf lib",

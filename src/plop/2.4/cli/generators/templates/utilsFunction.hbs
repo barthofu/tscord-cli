@@ -1,0 +1,8 @@
+import { Logger } from '@/services'
+import { resolveDependency } from '@/utils/functions'
+
+export async function {{camelCase name}}(): Promise<void> {
+	const logger = await resolveDependency(Logger)
+
+	logger.log('function {{camelCase name}} invoked !', 'info')
+}
